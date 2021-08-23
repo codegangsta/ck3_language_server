@@ -1,0 +1,25 @@
+{
+package parser
+}
+
+Script            = Pair* EOF
+Pair              = _ ID _ '=' _ Value _ Comment?
+
+/* Value Types */
+Value             = (Block / Lookup / Macro / ID / Bool / Num / Int)
+Block             = '{' (_ Pair _)* '}'
+ID                = [a-zA-Z0-9_.]+
+Lookup            = ID ":" ID
+Macro             = "$" ID "$"
+Bool              = "yes" / "no"
+Num               = '-'? Int ( '.' Digit+ )?
+
+/* Util Types */
+Comment           = '#' [^\n\r]*
+Int               = '0' / NonZeroDigit Digit*
+Digit             = [0-9]
+NonZeroDigit      = [1-9]
+
+_ "whitespace"    = [ \t\r\n]*
+
+EOF               = !.
