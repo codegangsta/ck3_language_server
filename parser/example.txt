@@ -1,0 +1,32 @@
+mana_power_increase = {
+	if = {
+		limit = {
+		NOT = { exists = var:magic_power }
+		}
+		set_variable = {
+			name = magic_power
+			value = 0
+		}
+	}
+	change_variable = { name = magic_power add = $MAGIC_POWER$ }
+}
+
+example_event.1001 = {
+	left_portrait = {
+		character = ROOT # Whoever this is scoped to will show up in this event window position, exhibiting the chosen animation. 
+		animation = fear # Take note that characters with SOME genetic traits (for example, gigantism, dwarfism) that change their character models have different animations, and if you assign one of THOSE animations to a character that does not have that model, crashes may occur.
+	}
+	right_portrait = {
+		character = ROOT
+		animation = scheme
+	}
+	lower_left_portrait = {
+		character = ROOT
+	}
+	lower_center_portrait = {
+		character = ROOT
+	}
+	lower_right_portrait = {
+		character = ROOT
+	}
+}
