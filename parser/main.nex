@@ -1,13 +1,13 @@
-/[ \n\t\r]+/       {}
-/#[^\n\r]*/        { println("COMMENT", lex.Text()) }
-/[a-zA-Z0-9_-]+/   { println("IDENT", lex.Text()) }
-/=/                { println("ASSIGNMENT", lex.Text()) }
-/{/                { println("OPEN_OBJ", lex.Text()) }
-/}/                { println("CLOSE_OBJ", lex.Text()) }
-/:/                { println("SCOPE_ACCESS", lex.Text()) }
-/\./               { println("IDENT_ACCESS", lex.Text()) }
-/\$[a-zA-Z0-9_-]*\$/   { println("MACRO", lex.Text()) }
-/./                { log.Fatalf("%d:%d Unrecognized character '%s'", lex.Line(), lex.Column(), lex.Text()) }
+/[ \n\t\r]+/          { }
+/#[^\n\r]*/           { println("COMMENT", lex.Text()) }
+/[a-zA-Z0-9_-]+/      { println("IDENT", lex.Text()) }
+/=/                   { println("ASSIGNMENT", lex.Text()) }
+/{/                   { println("OPEN_OBJ", lex.Text()) }
+/}/                   { println("CLOSE_OBJ", lex.Text()) }
+/:/                   { println("SCOPE_ACCESS", lex.Text()) }
+/\./                  { println("IDENT_ACCESS", lex.Text()) }
+/\$[a-zA-Z0-9_-]*\$/  { println("MACRO", lex.Text()) }
+/./                   { log.Fatalf("%d:%d Unrecognized character '%s'", lex.Line(), lex.Column(), lex.Text()) }
 //
 package main
 import (
