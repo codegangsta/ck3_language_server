@@ -9,3 +9,9 @@ func TestBasicParsing(t *testing.T) {
 		t.Fatal(err)
 	}
 }
+
+func BenchmarkBasicParsing(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		ParseFile("example.test")
+	}
+}

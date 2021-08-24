@@ -6,9 +6,11 @@ Script            = Pair* EOF
 Pair              = _ ID _ '=' _ Value _ Comment?
 
 /* Value Types */
-Value             = (Block / Lookup / Macro / ID / Bool / Num / Int)
+Value             = Block / Lookup / Macro / ID / Bool / Num / Int
 Block             = '{' (_ Pair _)* '}'
-ID                = [a-zA-Z0-9_.]+
+ID                = [a-zA-Z0-9_.]+ {
+        return string(c.text), nil
+}
 Lookup            = ID ":" ID
 Macro             = "$" ID "$"
 Bool              = "yes" / "no"
