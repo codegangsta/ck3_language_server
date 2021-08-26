@@ -2,8 +2,12 @@
 package parser
 }
 
-Script            = Pair* EOF
-Pair              = _ ID _ '=' _ Value _ Comment?
+Script            = pairs:Pair* EOF {
+        return Script{Position: Pos(c.pos), Pairs: Pairs(pairs)}, nil
+}
+Pair              = _ id:ID _ '=' _ val:Value _ Comment? {
+        return Pair{Position: Pos(c.pos), ID: id.(string)}, nil
+}
 
 /* Value Types */
 Value             = Block / Lookup / Macro / ID / Bool / Num / Int

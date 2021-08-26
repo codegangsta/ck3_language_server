@@ -10,8 +10,8 @@ func TestBasicParsing(t *testing.T) {
 	}
 }
 
-func BenchmarkBasicParsing(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		ParseFile("example.test")
-	}
+func TestReturnValue(t *testing.T) {
+	script, _ := ParseFile("example.txt")
+
+	t.Errorf("%+v", script)
 }
