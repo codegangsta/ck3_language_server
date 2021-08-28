@@ -108,9 +108,18 @@ func TestValues(t *testing.T) {
 			Position: &Pos{1, 1, 0, 23},
 		},
 
-		// TODO dot notation
-
-		// TODO ids
+		// dot notation
+		"nested.id.001 = 1": {
+			ID: &ID{
+				Value:    "nested.id.001",
+				Position: &Pos{1, 1, 0, 13},
+			},
+			Value: &Number{
+				Value:    1.0,
+				Position: &Pos{1, 17, 16, 1},
+			},
+			Position: &Pos{1, 1, 0, 17},
+		},
 
 		// TODO blocks
 
