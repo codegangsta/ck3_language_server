@@ -121,7 +121,30 @@ func TestValues(t *testing.T) {
 			Position: &Pos{1, 1, 0, 17},
 		},
 
-		// TODO blocks
+		// blocks
+		"nested.id.001 = { always = no }": {
+			ID: &ID{
+				Value:    "nested.id.001",
+				Position: &Pos{1, 1, 0, 13},
+			},
+			Value: &Block{
+				Commands: []*Command{
+					{
+						ID: &ID{
+							Value:    "always",
+							Position: &Pos{1, 19, 18, 6},
+						},
+						Value: &Boolean{
+							Value:    false,
+							Position: &Pos{1, 28, 27, 2},
+						},
+						Position: &Pos{1, 18, 17, 13},
+					},
+				},
+				Position: &Pos{1, 17, 16, 15},
+			},
+			Position: &Pos{1, 1, 0, 31},
+		},
 
 		// TODO string literals
 
