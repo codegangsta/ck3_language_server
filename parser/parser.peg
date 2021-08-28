@@ -2,16 +2,16 @@
 package parser
 }
 
-Script = commands:Command* EOF                    { return convertScript(c, commands) }
-Command = _ id:ID _ '=' _ val:Value  { return convertCommand(c, id, val) }
+Script = commands:Command* EOF                                    { return convertScript(c, commands) }
+Command = _ id:ID _ '=' _ val:Value                               { return convertCommand(c, id, val) }
 
-Value = (Block / Macro / Boolean / Number / ID) _ Comment? _
+Value = val:(Block / Macro / Boolean / Number / ID) _ Comment? _  { return val, nil }
 
-Block = '{' commands:Command* '}'                 { return convertBlock(c, commands) }
-Macro = "$" ID "$"                                { return convertMacro(c) }
-ID = [a-zA-Z0-9_.:]+                              { return convertID(c) }
-Boolean = "yes" / "no"                            { return convertBoolean(c) }
-Number = '-'? Int ( '.' Digit+ )?                 { return convertNumber(c) }
+Block = '{' commands:Command* '}'                                 { return convertBlock(c, commands) }
+Macro = "$" ID "$"                                                { return convertMacro(c) }
+ID = [a-zA-Z0-9_.:]+                                              { return convertID(c) }
+Boolean = "yes" / "no"                                            { return convertBoolean(c) }
+Number = '-'? Int ( '.' Digit+ )?                                 { return convertNumber(c) }
 
 /* Util Types */
 Comment = '#' [^\n\r]*

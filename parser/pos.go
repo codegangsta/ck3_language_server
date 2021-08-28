@@ -2,9 +2,5 @@
 package parser
 
 type Pos struct {
-	Line, Column, Offset int
-}
-
-type Range struct {
-	Start, End Pos
+	Line, Column, Offset, Length int
 }
