@@ -1,41 +1,47 @@
 package parser
 
-type Position struct {
-	line, col, offset int
-}
-
-func (p Position) Line() int {
-	return p.line
-}
-
-func (p Position) Col() int {
-	return p.col
-}
-
-func (p Position) Offset() int {
-	return p.offset
-}
-
-func Pos(p position) Position {
-	return Position{p.line, p.col, p.offset}
+// Node is an interface that every element of the AST needs to implement.
+type Node interface {
+	Range() Range
 }
 
 type Script struct {
-	Position
-	Pairs []Pair
+	Attributes []Attribute
+	Range
 }
 
-type Pair struct {
-	Position
-	ID string
+type Block struct {
+	Attributes []Attribute
+	Range
 }
 
-func Pairs(i interface{}) []Pair {
-	is := i.([]interface{})
-	pairs := make([]Pair, len(is))
-	for idx := range is {
-		pairs[idx] = is[idx].(Pair)
-	}
+type Attribute struct {
+	ID       ID
+	Value    Node
+	SrcRange Range
+}
 
-	return pairs
+type ID struct {
+	Name     string
+	SrcRange Range
+}
+
+type Lookup struct {
+	Value    string
+	SrcRange Range
+}
+
+type Macro struct {
+	Value    string
+	SrcRange Range
+}
+
+type Boolean struct {
+	Value    bool
+	SrcRange Range
+}
+
+type Number struct {
+	Value    bool
+	SrcRange Range
 }

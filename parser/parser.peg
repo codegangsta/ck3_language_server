@@ -5,25 +5,40 @@ package parser
 Script            = pairs:Pair* EOF {
         return Script{Position: Pos(c.pos), Pairs: Pairs(pairs)}, nil
 }
+
 Pair              = _ id:ID _ '=' _ val:Value _ Comment? {
-        return Pair{Position: Pos(c.pos), ID: id.(string)}, nil
+        return Pair{Position: Pos(c.pos), ID: id.(Literal), Value: val}, nil
 }
 
 /* Value Types */
-Value             = Block / Lookup / Macro / ID / Bool / Num / Int
+Value             = Block
+                  / Lookup { return literal(c, LOOKUP) }
+                  / Macro  { return literal(c, MACRO) }
+                  / Bool   { return literal(c, BOOL) }
+                  / Num    { return literal(c, NUM) }
+                  / ID     { return literal(c, ID) }
+
 Block             = '{' (_ Pair _)* '}'
+
 ID                = [a-zA-Z0-9_.]+ {
-        return string(c.text), nil
+        return literal(c, ID)
 }
+
 Lookup            = ID ":" ID
+
 Macro             = "$" ID "$"
+
 Bool              = "yes" / "no"
-Num               = '-'? Int ( '.' Digit+ )?
+
+Num               = '-'? Int ( '.' Digit+ )? 
 
 /* Util Types */
 Comment           = '#' [^\n\r]*
+
 Int               = '0' / NonZeroDigit Digit*
+
 Digit             = [0-9]
+
 NonZeroDigit      = [1-9]
 
 _ "whitespace"    = [ \t\r\n]*
