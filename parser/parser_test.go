@@ -56,9 +56,44 @@ func TestValues(t *testing.T) {
 			Position: &Pos{1, 1, 0, 21},
 		},
 
-		// TODO boolean yes
-		// TODO boolean no
-		// TODO macro
+		// boolean yes
+		// "always = yes": {
+		// 	ID: &ID{
+		// 		Name:     "always",
+		// 		Position: &Pos{1, 1, 0, 15},
+		// 	},
+		// 	Value: &Boolean{
+		// 		Value:    true,
+		// 		Position: &Pos{1, 19, 18, 3},
+		// 	},
+		// 	Position: &Pos{1, 1, 0, 21},
+		// },
+
+		// boolean no
+		"always = no": {
+			ID: &ID{
+				Name:     "always",
+				Position: &Pos{1, 1, 0, 6},
+			},
+			Value: &Boolean{
+				Value:    false,
+				Position: &Pos{1, 10, 9, 2},
+			},
+			Position: &Pos{1, 1, 0, 11},
+		},
+
+		// macro
+		"macro = $MY_MACRO$": {
+			ID: &ID{
+				Name:     "macro",
+				Position: &Pos{1, 1, 0, 5},
+			},
+			Value: &Macro{
+				Value:    "$MY_MACRO$",
+				Position: &Pos{1, 9, 8, 10},
+			},
+			Position: &Pos{1, 1, 0, 18},
+		},
 		// TODO scopes
 		// TODO dot notation
 		// TODO ids
@@ -68,9 +103,9 @@ func TestValues(t *testing.T) {
 	}
 
 	for in, want := range values {
-		script, err := Parse("f", []byte(in))
+		script, err := Parse(in, []byte(in))
 		if err != nil {
-			t.Errorf("Unable to process '%s': %v", in, err)
+			t.Error(err)
 		}
 
 		got := script.(*Script).Commands[0]
