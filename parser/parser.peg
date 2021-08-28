@@ -3,18 +3,36 @@ package parser
 }
 
 Script = commands:Command* EOF                                    { return convertScript(c, commands) }
+
 Command = _ id:ID _ '=' _ val:Value                               { return convertCommand(c, id, val) }
 
-Value = val:(Block / Macro / Boolean / Number / ID) _ Comment? _  { return val, nil }
+Value = val:(Block / Macro / Boolean / Number / String / ID) _ Comment? _  { return val, nil }
 
 Block = '{' commands:Command* '}'                                 { return convertBlock(c, commands) }
+
 Macro = "$" ID "$"                                                { return convertMacro(c) }
+
 ID = [a-zA-Z0-9_.:]+                                              { return convertID(c) }
+
 Boolean = ("yes" / "no")                                          { return convertBoolean(c) }
+
 Number = '-'? Int ( '.' Digit+ )?                                 { return convertNumber(c) }
+
+String ← '"' ( !EscapedChar . / '\\' EscapeSequence )* '"' {
+    c.text = bytes.Replace(c.text, []byte(`\/`), []byte(`/`), -1)
+    return strconv.Unquote(string(c.text))
+}
 
 /* Util Types */
 Comment = '#' [^\n\r]*
+
+EscapedChar ← [\x00-\x1f"\\]
+
+EscapeSequence ← SingleCharEscape / UnicodeEscape
+
+SingleCharEscape ← ["\\/bfnrt]
+
+UnicodeEscape ← 'u' HexDigit HexDigit HexDigit HexDigit
 
 Int = '0' / NonZeroDigit Digit*
 

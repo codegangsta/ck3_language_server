@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"bytes"
 	"errors"
 	"strconv"
 )
@@ -55,6 +56,19 @@ func convertNumber(c *current) (*Number, error) {
 func convertID(c *current) (*ID, error) {
 	return &ID{
 		Value:    string(c.text),
+		Position: convertPos(c),
+	}, nil
+}
+
+func convertString(c *current) (*String, error) {
+	c.text = bytes.Replace(c.text, []byte(`\/`), []byte(`/`), -1)
+
+	val, err := strconv.Unquote(string(c.text))
+	if err != nil {
+		return nil, err
+	}
+	return &String{
+		Value:    val,
 		Position: convertPos(c),
 	}, nil
 }

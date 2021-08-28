@@ -60,6 +60,11 @@ type Number struct {
 	Position *Pos
 }
 
+type String struct {
+	Value    string
+	Position *Pos
+}
+
 // Position Methods for all nodes
 func (x *Script) Pos() *Pos  { return x.Position }
 func (x *Block) Pos() *Pos   { return x.Position }
