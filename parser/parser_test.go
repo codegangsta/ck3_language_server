@@ -17,7 +17,6 @@ func TestBasicParsing(t *testing.T) {
 }
 
 func TestValues(t *testing.T) {
-	// todo: switch comparison to full struct value
 	values := map[string]*Command{
 		"foo = 1": {
 			ID: &ID{
@@ -30,6 +29,18 @@ func TestValues(t *testing.T) {
 			},
 			Position: &Pos{1, 1, 0, 7},
 		},
+
+		"pi = 3.14": {
+			ID: &ID{
+				Name:     "pi",
+				Position: &Pos{1, 1, 0, 2},
+			},
+			Value: &Number{
+				Value:    big.NewFloat(1.0),
+				Position: &Pos{1, 6, 5, 4},
+			},
+			Position: &Pos{1, 1, 0, 9},
+		},
 	}
 
 	for in, want := range values {
@@ -39,7 +50,9 @@ func TestValues(t *testing.T) {
 		}
 
 		got := script.(*Script).Commands[0]
-		mustEqual(t, got, want)
+		if diff := deep.Equal(got, want); diff != nil {
+			t.Errorf("'%s': %v", in, strings.Join(diff, ", "))
+		}
 	}
 }
 
