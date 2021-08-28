@@ -1,6 +1,8 @@
 package parser
 
-import "math/big"
+import (
+	"math/big"
+)
 
 // Node is an interface that every element of the AST needs to implement in
 // order to support proper parsing

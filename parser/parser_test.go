@@ -1,8 +1,11 @@
 package parser
 
 import (
-	"reflect"
+	"math/big"
+	"strings"
 	"testing"
+
+	"github.com/go-test/deep"
 )
 
 func TestBasicParsing(t *testing.T) {
@@ -13,25 +16,35 @@ func TestBasicParsing(t *testing.T) {
 	}
 }
 
-// func TestValues(t *testing.T) {
-// 	// todo: switch comparison to full struct value
-// 	values := map[string]string{
-// 		"foo = 1": "foo:3 1:5",
-// 	}
+func TestValues(t *testing.T) {
+	// todo: switch comparison to full struct value
+	values := map[string]*Command{
+		"foo = 1": {
+			ID: &ID{
+				Name:     "foo",
+				Position: &Pos{1, 1, 0, 3},
+			},
+			Value: &Number{
+				Value:    big.NewFloat(1.0),
+				Position: &Pos{1, 7, 6, 1},
+			},
+			Position: &Pos{1, 1, 0, 7},
+		},
+	}
 
-// 	for in, out := range values {
-// 		script, err := Parse("f", []byte(in))
-// 		if err != nil {
-// 			t.Errorf("Unable to process '%s': %v", in, err)
-// 		}
+	for in, want := range values {
+		script, err := Parse("f", []byte(in))
+		if err != nil {
+			t.Errorf("Unable to process '%s': %v", in, err)
+		}
 
-// 		pair := script.(Script).Pairs[0]
-// 		expect(t, pair.String(), out)
-// 	}
-// }
+		got := script.(*Script).Commands[0]
+		mustEqual(t, got, want)
+	}
+}
 
-func expect(t *testing.T, a interface{}, b interface{}) {
-	if a != b {
-		t.Errorf("Expected %+v (type %v) - Got %+v (type %v)", b, reflect.TypeOf(b), a, reflect.TypeOf(a))
+func mustEqual(t *testing.T, a interface{}, b interface{}) {
+	if diff := deep.Equal(a, b); diff != nil {
+		t.Error(strings.Join(diff, ", "))
 	}
 }
