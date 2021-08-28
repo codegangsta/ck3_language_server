@@ -2,7 +2,6 @@ package parser
 
 import (
 	"errors"
-	"math/big"
 	"strconv"
 )
 
@@ -48,7 +47,7 @@ func convertNumber(c *current) (*Number, error) {
 	}
 
 	return &Number{
-		Value:    big.NewFloat(f),
+		Value:    f,
 		Position: convertPos(c),
 	}, nil
 }

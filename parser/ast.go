@@ -1,9 +1,5 @@
 package parser
 
-import (
-	"math/big"
-)
-
 // Node is an interface that every element of the AST needs to implement in
 // order to support proper parsing
 type Node interface {
@@ -60,7 +56,7 @@ type Boolean struct {
 
 // Number represents a Number value
 type Number struct {
-	Value    *big.Float
+	Value    float64
 	Position *Pos
 }
 
