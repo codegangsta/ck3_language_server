@@ -146,7 +146,18 @@ func TestValues(t *testing.T) {
 			Position: &Pos{1, 1, 0, 31},
 		},
 
-		// TODO string literals
+		// string literals
+		"title = \"Hello world\"": {
+			ID: &ID{
+				Value:    "title",
+				Position: &Pos{1, 1, 0, 5},
+			},
+			Value: &String{
+				Value:    "Hello world",
+				Position: &Pos{1, 9, 8, 13},
+			},
+			Position: &Pos{1, 1, 0, 21},
+		},
 
 		// comments
 		"nested.id.001 = 1 # with a comment": {

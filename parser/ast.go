@@ -73,3 +73,4 @@ func (x *ID) Pos() *Pos      { return x.Position }
 func (x *Macro) Pos() *Pos   { return x.Position }
 func (x *Boolean) Pos() *Pos { return x.Position }
 func (x *Number) Pos() *Pos  { return x.Position }
+func (x *String) Pos() *Pos  { return x.Position }
