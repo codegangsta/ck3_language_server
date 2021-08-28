@@ -148,7 +148,18 @@ func TestValues(t *testing.T) {
 
 		// TODO string literals
 
-		// TODO comments
+		// comments
+		"nested.id.001 = 1 # with a comment": {
+			ID: &ID{
+				Value:    "nested.id.001",
+				Position: &Pos{1, 1, 0, 13},
+			},
+			Value: &Number{
+				Value:    1.0,
+				Position: &Pos{1, 17, 16, 1},
+			},
+			Position: &Pos{1, 1, 0, 34},
+		},
 	}
 
 	for in, want := range values {
