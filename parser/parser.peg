@@ -2,45 +2,26 @@
 package parser
 }
 
-Script            = pairs:Pair* EOF {
-        return Script{Position: Pos(c.pos), Pairs: Pairs(pairs)}, nil
-}
+Script = commands:Command* EOF                    { return convertScript(c, commands) }
+Command = _ id:ID _ '=' _ val:Value  { return convertCommand(c, id, val) }
 
-Pair              = _ id:ID _ '=' _ val:Value _ Comment? {
-        return Pair{Position: Pos(c.pos), ID: id.(Literal), Value: val}, nil
-}
+Value = (Block / Macro / Boolean / Number / ID) _ Comment? _
 
-/* Value Types */
-Value             = Block
-                  / Lookup { return literal(c, LOOKUP) }
-                  / Macro  { return literal(c, MACRO) }
-                  / Bool   { return literal(c, BOOL) }
-                  / Num    { return literal(c, NUM) }
-                  / ID     { return literal(c, ID) }
-
-Block             = '{' (_ Pair _)* '}'
-
-ID                = [a-zA-Z0-9_.]+ {
-        return literal(c, ID)
-}
-
-Lookup            = ID ":" ID
-
-Macro             = "$" ID "$"
-
-Bool              = "yes" / "no"
-
-Num               = '-'? Int ( '.' Digit+ )? 
+Block = '{' commands:Command* '}'                 { return convertBlock(c, commands) }
+Macro = "$" ID "$"                                { return convertMacro(c) }
+ID = [a-zA-Z0-9_.:]+                              { return convertID(c) }
+Boolean = "yes" / "no"                            { return convertBoolean(c) }
+Number = '-'? Int ( '.' Digit+ )?                 { return convertNumber(c) }
 
 /* Util Types */
-Comment           = '#' [^\n\r]*
+Comment = '#' [^\n\r]*
 
-Int               = '0' / NonZeroDigit Digit*
+Int = '0' / NonZeroDigit Digit*
 
-Digit             = [0-9]
+Digit = [0-9]
 
-NonZeroDigit      = [1-9]
+NonZeroDigit = [1-9]
 
-_ "whitespace"    = [ \t\r\n]*
+_ "whitespace" = [ \t\r\n]*
 
-EOF               = !.
+EOF = !.
