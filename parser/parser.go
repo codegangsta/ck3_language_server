@@ -239,20 +239,20 @@ var g = &grammar{
 		{
 			name: "Boolean",
 			pos:  position{line: 13, col: 1, offset: 602},
-			expr: &choiceExpr{
+			expr: &actionExpr{
 				pos: position{line: 13, col: 11, offset: 612},
-				alternatives: []interface{}{
-					&litMatcher{
-						pos:        position{line: 13, col: 11, offset: 612},
-						val:        "yes",
-						ignoreCase: false,
-						want:       "\"yes\"",
-					},
-					&actionExpr{
-						pos: position{line: 13, col: 19, offset: 620},
-						run: (*parser).callonBoolean3,
-						expr: &litMatcher{
-							pos:        position{line: 13, col: 19, offset: 620},
+				run: (*parser).callonBoolean1,
+				expr: &choiceExpr{
+					pos: position{line: 13, col: 12, offset: 613},
+					alternatives: []interface{}{
+						&litMatcher{
+							pos:        position{line: 13, col: 12, offset: 613},
+							val:        "yes",
+							ignoreCase: false,
+							want:       "\"yes\"",
+						},
+						&litMatcher{
+							pos:        position{line: 13, col: 20, offset: 621},
 							val:        "no",
 							ignoreCase: false,
 							want:       "\"no\"",
@@ -474,14 +474,14 @@ func (p *parser) callonID1() (interface{}, error) {
 	return p.cur.onID1()
 }
 
-func (c *current) onBoolean3() (interface{}, error) {
+func (c *current) onBoolean1() (interface{}, error) {
 	return convertBoolean(c)
 }
 
-func (p *parser) callonBoolean3() (interface{}, error) {
+func (p *parser) callonBoolean1() (interface{}, error) {
 	stack := p.vstack[len(p.vstack)-1]
 	_ = stack
-	return p.cur.onBoolean3()
+	return p.cur.onBoolean1()
 }
 
 func (c *current) onNumber1() (interface{}, error) {

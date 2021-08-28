@@ -57,17 +57,17 @@ func TestValues(t *testing.T) {
 		},
 
 		// boolean yes
-		// "always = yes": {
-		// 	ID: &ID{
-		// 		Value:     "always",
-		// 		Position: &Pos{1, 1, 0, 15},
-		// 	},
-		// 	Value: &Boolean{
-		// 		Value:    true,
-		// 		Position: &Pos{1, 19, 18, 3},
-		// 	},
-		// 	Position: &Pos{1, 1, 0, 21},
-		// },
+		"always = yes": {
+			ID: &ID{
+				Value:    "always",
+				Position: &Pos{1, 1, 0, 6},
+			},
+			Value: &Boolean{
+				Value:    true,
+				Position: &Pos{1, 10, 9, 3},
+			},
+			Position: &Pos{1, 1, 0, 12},
+		},
 
 		// boolean no
 		"always = no": {
