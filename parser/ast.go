@@ -37,7 +37,7 @@ type Command struct {
 // ID represents an identifier value. Typically used for strings and command
 // IDs
 type ID struct {
-	Name     string
+	Value    string
 	Position *Pos
 }
 

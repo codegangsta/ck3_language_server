@@ -20,7 +20,7 @@ func TestValues(t *testing.T) {
 		// Integers
 		"foo = 1": {
 			ID: &ID{
-				Name:     "foo",
+				Value:    "foo",
 				Position: &Pos{1, 1, 0, 3},
 			},
 			Value: &Number{
@@ -33,7 +33,7 @@ func TestValues(t *testing.T) {
 		// Floats
 		"pi = 3.14": {
 			ID: &ID{
-				Name:     "pi",
+				Value:    "pi",
 				Position: &Pos{1, 1, 0, 2},
 			},
 			Value: &Number{
@@ -46,7 +46,7 @@ func TestValues(t *testing.T) {
 		// Negative numbers
 		"negative_number = -18": {
 			ID: &ID{
-				Name:     "negative_number",
+				Value:    "negative_number",
 				Position: &Pos{1, 1, 0, 15},
 			},
 			Value: &Number{
@@ -59,7 +59,7 @@ func TestValues(t *testing.T) {
 		// boolean yes
 		// "always = yes": {
 		// 	ID: &ID{
-		// 		Name:     "always",
+		// 		Value:     "always",
 		// 		Position: &Pos{1, 1, 0, 15},
 		// 	},
 		// 	Value: &Boolean{
@@ -72,7 +72,7 @@ func TestValues(t *testing.T) {
 		// boolean no
 		"always = no": {
 			ID: &ID{
-				Name:     "always",
+				Value:    "always",
 				Position: &Pos{1, 1, 0, 6},
 			},
 			Value: &Boolean{
@@ -85,7 +85,7 @@ func TestValues(t *testing.T) {
 		// macro
 		"macro = $MY_MACRO$": {
 			ID: &ID{
-				Name:     "macro",
+				Value:    "macro",
 				Position: &Pos{1, 1, 0, 5},
 			},
 			Value: &Macro{
@@ -94,11 +94,28 @@ func TestValues(t *testing.T) {
 			},
 			Position: &Pos{1, 1, 0, 18},
 		},
-		// TODO scopes
+
+		//  scopes
+		"scope = var:magic_power": {
+			ID: &ID{
+				Value:    "scope",
+				Position: &Pos{1, 1, 0, 5},
+			},
+			Value: &ID{
+				Value:    "var:magic_power",
+				Position: &Pos{1, 9, 8, 15},
+			},
+			Position: &Pos{1, 1, 0, 23},
+		},
+
 		// TODO dot notation
+
 		// TODO ids
+
 		// TODO blocks
+
 		// TODO string literals
+
 		// TODO comments
 	}
 

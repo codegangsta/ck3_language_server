@@ -54,7 +54,7 @@ func convertNumber(c *current) (*Number, error) {
 
 func convertID(c *current) (*ID, error) {
 	return &ID{
-		Name:     string(c.text),
+		Value:    string(c.text),
 		Position: convertPos(c),
 	}, nil
 }
